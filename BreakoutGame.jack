@@ -1,0 +1,64 @@
+class BreakoutGame {
+    field Player p;
+    field Ball b;
+
+
+    constructor BreakoutGame new() {
+        let p = Player.new(Vector2.new(255, 200), 30);
+
+        let b = Ball.new(Vector2.new(280, 180), 3);
+
+        return this;
+    }
+
+    method void run() {
+        var char key;
+        var boolean exit;
+        let exit = false;
+
+        do p.draw();
+        do drawBricks();
+
+        while(~exit) {
+            while(key = 0) {
+                let key = Keyboard.keyPressed();
+           
+                do b.draw();
+                do b.move();
+            }
+
+            if(key = 81) { // q key
+                let exit = true;
+            } 
+
+            if(key = 68) { // d key
+                do p.moveRight();
+            }
+
+            if(key = 65) { // a key
+                do p.moveLeft();
+            }    
+
+            let key = 0;   
+            do Sys.wait(100);
+        }
+
+        return;
+    }
+
+    method void dispose() {
+        do p.dispose();
+        do b.dispose();
+        do Memory.deAlloc(this);
+
+        return;
+    }
+
+    method void drawBricks() {
+        var Brick test;
+        let test = Brick.new(Vector2.new(5,5));
+
+        do test.draw(true);
+        return;
+    }
+}

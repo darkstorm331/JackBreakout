@@ -1,0 +1,30 @@
+class Brick {
+    field Vector2 pos;
+    field int length;
+    field int width;
+
+    constructor Brick new(Vector2 apos) {
+        let pos = apos;
+
+        let length = 20;
+        let width = 5;
+
+        do draw(true);
+        return this;
+    }
+
+    method void draw(boolean enabled) {
+        do Screen.setColor(enabled);
+        do Screen.drawRectangle(pos.getX(), pos.getY(), pos.getX() + length, pos.getY() + width);
+
+        return;
+    }    
+
+    method void dispose() {
+        do pos.dispose();
+
+        do Memory.deAlloc(this);
+
+        return;
+    }
+}

@@ -1,0 +1,65 @@
+class Player {
+    field Vector2 pos;
+    field int speed;
+    field int length;
+    field int width;
+
+    constructor Player new(Vector2 v, int aspeed) {
+        let pos = v;
+        let speed = aspeed;
+
+        let length = 60;
+        let width = 5;
+
+        return this;
+    }
+
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(pos.getX(), pos.getY(), pos.getX() + length, pos.getY() + width);
+        return;
+    }
+
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(pos.getX(), pos.getY(), pos.getX() + length, pos.getY() + width);
+        return;
+    }
+
+    method void moveLeft() {
+        do erase();
+
+        if(pos.getX() > speed) {
+            do pos.setX(pos.getX() - speed);
+        } else {
+            do pos.setX(0);
+        }
+
+        do draw();
+
+        return;
+    }
+
+    method void moveRight() {
+        do erase();
+
+        if((pos.getX() + length) < (511 - speed)) {
+            do pos.setX(pos.getX() + speed);
+        } else {
+            do pos.setX((511 - length));
+        }
+
+        do draw();
+
+        return;
+    }
+
+    method void dispose() {
+        do pos.dispose();
+        do Memory.deAlloc(this);
+
+        return;
+    }
+
+
+}

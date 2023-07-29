@@ -1,0 +1,56 @@
+class Vector2 {
+    field int x;
+    field int y;
+
+    constructor Vector2 new(int ax, int ay) {
+        let x = ax;
+        let y = ay;
+
+        return this;
+    }
+
+    method int getX() {
+        return x;
+    }
+
+    method int getY() {
+        return y;
+    }
+
+    method void setX(int newX) {
+        let x = newX;
+        return;
+    }
+
+    method void setY(int newY) {
+        let y = newY;
+        return;
+    }
+
+    method void add(Vector2 v) {
+        let x = x + v.getX();
+        let y = y + v.getY();
+        return;
+    }
+
+    method void subtract(Vector2 v) {
+        let x = x - v.getX();
+        let y = y - v.getY();
+        return;
+    }
+
+    method int distance(Vector2 v) {
+        var int dx, dy;
+
+        let dx = x - v.getX();
+        let dy = y - v.getY();
+
+        return Math.sqrt((dx*dx) + (dy*dy));
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+
+        return;
+    }
+}

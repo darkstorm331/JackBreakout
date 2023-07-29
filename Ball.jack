@@ -1,0 +1,56 @@
+class Ball {
+    field int radius;
+    field Vector2 pos;
+    field Vector2 velocity;
+
+    constructor Ball new(Vector2 apos, int ar) {
+        let radius = ar;
+        let pos = apos;
+
+        let velocity = Vector2.new(5, -1);
+
+        return this;
+    }
+
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawCircle(pos.getX(), pos.getY(), radius);
+
+        return;
+    }    
+
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawCircle(pos.getX(), pos.getY(), radius);
+
+        return;
+    }
+
+    method void move() {   
+        do erase();
+
+        do pos.add(velocity);
+
+        if(pos.getX() > 500 | pos.getX() < 10) {
+            do velocity.setX(-velocity.getX());
+        }
+
+        if(pos.getY() > 240 | pos.getY() < 10) {
+            do velocity.setY(-velocity.getY());
+        }
+
+        do draw();
+        do Sys.wait(100);
+        return;
+    }
+
+    method void dispose() {
+        do pos.dispose();
+        do velocity.dispose();
+
+        do Memory.deAlloc(this);
+
+        return;
+    }
+
+}
