@@ -128,10 +128,12 @@ goto IF_FALSE0
 label IF_TRUE0
 push this 2
 call Vector2.getY 1
-push this 4
-add
 push argument 1
 call Vector2.getY 1
+push this 4
+push constant 2
+add
+sub
 gt
 if-goto IF_TRUE1
 goto IF_FALSE1
@@ -156,8 +158,16 @@ gt
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 0
+push pointer 0
+call Ball.erase 1
+pop temp 0
+push constant 280
+push constant 140
+call Vector2.new 2
 pop this 2
+push pointer 0
+call Ball.draw 1
+pop temp 0
 push constant 0
 not
 return
@@ -196,14 +206,14 @@ call Screen.setColor 1
 pop temp 0
 push this 2
 call Vector2.getX 1
-push constant 10
-sub
 push this 2
 call Vector2.getY 1
 push constant 10
 sub
 push this 2
 call Vector2.getX 1
+push constant 10
+add
 push this 2
 call Vector2.getY 1
 call Screen.drawRectangle 4
