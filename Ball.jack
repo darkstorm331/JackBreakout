@@ -1,22 +1,25 @@
+//This object handles the implementation of the ball
+//represented by a square
 class Ball {
-    field Vector2 startingPos;
     field int radius;
     field Vector2 pos;
-    field Vector2 velocity;
+    field Vector2 direction;
     field int length;
 
 
-    constructor Ball new(Vector2 apos) {
-        let startingPos = apos;
+    constructor Ball new(Vector2 apos) {       
         let pos = apos;
 
+        //the ball is a square of 10*10
         let length = 10;
 
-        let velocity = Vector2.new(1, 3);
+        //Set the initial direction that the ball will move in
+        let direction = Vector2.new(1, 3);
 
         return this;
     }
 
+    //draw the ball to the screen
     method void draw() {
         do Screen.setColor(true);
         do Screen.drawRectangle(pos.getX(), pos.getY(), pos.getX() + length, pos.getY() + length);
@@ -24,6 +27,7 @@ class Ball {
         return;
     }    
 
+    //erase the ball from the screen
     method void erase() {
         do Screen.setColor(false);
         do Screen.drawRectangle(pos.getX(), pos.getY(), pos.getX() + length, pos.getY() + length);
@@ -31,33 +35,37 @@ class Ball {
         return;
     }
 
+    //move the ball, and bounce it off of the walls and ceiling
     method void move() {   
         do erase();
 
-        do pos.add(velocity);
+        do pos.add(direction);
 
         if(pos.getX() > 500 | pos.getX() < 10) {
-            do velocity.setX(-velocity.getX());
+            do direction.setX(-direction.getX());
         }
 
         if(pos.getY() < 10) {
-            do velocity.setY(-velocity.getY());
+            do direction.setY(-direction.getY());
         }
 
         do draw();
         return;
     }
 
+    //if we have collided with the player, we need to reverse direction
     method void HasCollidedWithPlayer(Vector2 pVec, int alen) {
         if(pos.getX() > pVec.getX() & pos.getX() < (pVec.getX() + alen)) {
             if((pos.getY()) > (pVec.getY()-(length + 2))) {
-                do velocity.setY(-velocity.getY());  
+                do direction.setY(-direction.getY());  
             }
         }
 
         return;
     }
 
+    //ball is below the player
+    //set it back above the player
     method boolean hasGoneOutOfBounds() {
         if(pos.getY() > 230) {
             do erase();
@@ -69,6 +77,8 @@ class Ball {
         return false;
     }
 
+    //we have hit the space that contains the bricks
+    //take a 10*10 chunk out and bounce off
     method boolean hasHitABrick() {
         var int screenStart;
         var int memLoc;
@@ -81,24 +91,27 @@ class Ball {
         if(Memory.peek(memLoc) = -1) {            
             do Screen.setColor(false);
             do Screen.drawRectangle(pos.getX(), pos.getY() - 10, pos.getX() + 10, pos.getY());
-            do velocity.setY(-velocity.getY()); 
+            do direction.setY(-direction.getY()); 
             return true; 
         }
 
         return false;
     }
 
+    //for other objects to get the x location of the ball
     method int getX() {
         return pos.getX();
     }
 
+    //for other objects to get the y location of the ball
     method int getY() {
         return pos.getY();
     }
 
+    //dispose of the ball
     method void dispose() {
         do pos.dispose();
-        do velocity.dispose();
+        do direction.dispose();
 
         do Memory.deAlloc(this);
 

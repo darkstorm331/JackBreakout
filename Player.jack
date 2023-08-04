@@ -1,3 +1,4 @@
+//This class implements the player object
 class Player {
     field Vector2 pos;
     field int speed;
@@ -6,26 +7,32 @@ class Player {
 
     constructor Player new(Vector2 v, int aspeed) {
         let pos = v;
+        //Speed that the player can move left or right
         let speed = aspeed;
 
+        //the player is a 100*10 rectangle
         let length = 100;
         let width = 10;
 
         return this;
     }
 
+    //draw the player to the screen
     method void draw() {
         do Screen.setColor(true);
         do Screen.drawRectangle(pos.getX(), pos.getY(), pos.getX() + length, pos.getY() + width);
         return;
     }
 
+    //erase the player from the screen
     method void erase() {
         do Screen.setColor(false);
         do Screen.drawRectangle(pos.getX(), pos.getY(), pos.getX() + length, pos.getY() + width);
         return;
     }
 
+    //move the player left
+    //but don't allow the player to go outside the bounds of the game
     method void moveLeft() {
         do erase();
 
@@ -40,6 +47,8 @@ class Player {
         return;
     }
 
+    //move the player right
+    //but don't allow the player to go outside the bounds of the game
     method void moveRight() {
         do erase();
 
@@ -54,14 +63,19 @@ class Player {
         return;
     }
 
+    //allows other objects to get the position vector
+    //of the player
     method Vector2 getVector() {
         return pos;
     }
 
+    //allows other objects to get the length
+    //of the player
     method int getLength() {
         return length;
     }
 
+    //dispose of the object
     method void dispose() {
         do pos.dispose();
         do Memory.deAlloc(this);

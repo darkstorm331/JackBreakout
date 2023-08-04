@@ -13,9 +13,6 @@ push constant 180
 call Vector2.new 2
 call Ball.new 1
 pop this 1
-push constant 60
-call Array.new 1
-pop this 2
 push constant 5
 pop this 3
 push constant 0

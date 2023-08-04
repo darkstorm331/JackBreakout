@@ -1,3 +1,4 @@
+//This class handles the main game loop
 class BreakoutGame {
     field Player p;
     field Ball b;
@@ -7,12 +8,13 @@ class BreakoutGame {
 
 
     constructor BreakoutGame new() {
+        // create the player object
         let p = Player.new(Vector2.new(255, 200), 40);
 
+        //create the ball object
         let b = Ball.new(Vector2.new(280, 180));
 
-        let bricks = Array.new(60);
-
+        //set the initial lives and score
         let lives = 5;
         let score = 0;
 
@@ -25,57 +27,80 @@ class BreakoutGame {
 
         let exit = false;
 
+        //Initially draw the player and ball
         do p.draw();
         do b.draw();
 
+        //Bricks only need to be drawn once because they don't move
         do drawBricks();
 
+        //Keep looping until all lives are lost, or the player presses q
         while(~exit) {          
             let key = Keyboard.keyPressed();
 
+            //Move the ball and check for collisions with the player's paddle
             do b.move();
             do b.HasCollidedWithPlayer(p.getVector(), p.getLength());
+
+            //Draw the lives and score to the screen
             do drawHud();
 
+            //If the ball has hit a brick, we need to white out that part of the screen
+            //and give the player 10 points
             if(b.hasHitABrick()) {
                 let score = score + 10;
             }
 
+            //The ball has gone below the paddle
+            //Position is reset above the paddle and one life
+            //is deducted
             if(b.hasGoneOutOfBounds()) {
                 let lives = lives - 1;
             }
 
+            //quit the game
             if(key = 81) { // q key
                 let exit = true;
                 do p.dispose();
                 do b.dispose();
             } 
 
+            //go right
             if(key = 68) { // d key
                 do p.moveRight();
             }
 
+            //go left
             if(key = 65) { // a key
                 do p.moveLeft();
             }    
 
+            //no more lives
+            //so exit game
             if(lives = 0) {
                 let exit = true;
             }
-
+           
             let key = 0;   
+
+            //Little wait so the game doesn't
+            //run too fast
             do Sys.wait(50);
         }
 
         return;
     }
 
+    //Draw a giant rectangle of black to the screen
+    //to represent the bricks
     method void drawBricks() {
         do Screen.drawRectangle(0, 0, 511, 80);
 
         return;
     }
 
+
+    //draw the lives and score onto the screen
     method void drawHud() {
         do Output.moveCursor(21, 0);
         do Output.printString("Lives: ");
@@ -92,6 +117,7 @@ class BreakoutGame {
         return;
     }
 
+    //dispose of this game object
     method void dispose() {
         do p.dispose();
         do b.dispose();

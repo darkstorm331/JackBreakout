@@ -1,5 +1,7 @@
 class Main {
     function void main() {
+
+        //Start game
         var BreakoutGame bg;
         let bg = BreakoutGame.new();
 

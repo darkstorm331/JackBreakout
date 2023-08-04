@@ -1,7 +1,10 @@
+//this class represents a point in
+//2D space
 class Vector2 {
     field int x;
     field int y;
 
+    //set up the vector with an x and y
     constructor Vector2 new(int ax, int ay) {
         let x = ax;
         let y = ay;
@@ -9,36 +12,43 @@ class Vector2 {
         return this;
     }
 
+    //get the x position of this vector
     method int getX() {
         return x;
     }
 
+    //get the y position of this vector
     method int getY() {
         return y;
     }
 
+    //set a new x position for this vector
     method void setX(int newX) {
         let x = newX;
         return;
     }
 
+    //set a new y position for this vector
     method void setY(int newY) {
         let y = newY;
         return;
     }
 
+    //will add another vector to this object
     method void add(Vector2 v) {
         let x = x + v.getX();
         let y = y + v.getY();
         return;
     }
 
+    //will subtract another vector from this object
     method void subtract(Vector2 v) {
         let x = x - v.getX();
         let y = y - v.getY();
         return;
     }
 
+    //get the distance from this vector to another vector
     method int distance(Vector2 v) {
         var int dx, dy;
 
@@ -48,6 +58,7 @@ class Vector2 {
         return Math.sqrt((dx*dx) + (dy*dy));
     }
 
+    //dispose of this object
     method void dispose() {
         do Memory.deAlloc(this);
 
