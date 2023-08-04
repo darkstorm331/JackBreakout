@@ -8,8 +8,8 @@ class Player {
         let pos = v;
         let speed = aspeed;
 
-        let length = 60;
-        let width = 5;
+        let length = 100;
+        let width = 10;
 
         return this;
     }
@@ -52,6 +52,14 @@ class Player {
         do draw();
 
         return;
+    }
+
+    method Vector2 getVector() {
+        return pos;
+    }
+
+    method int getLength() {
+        return length;
     }
 
     method void dispose() {

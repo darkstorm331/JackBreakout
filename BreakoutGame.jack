@@ -1,12 +1,20 @@
 class BreakoutGame {
     field Player p;
     field Ball b;
+    field Array bricks;
+    field int lives;
+    field int score;
 
 
     constructor BreakoutGame new() {
-        let p = Player.new(Vector2.new(255, 200), 30);
+        let p = Player.new(Vector2.new(255, 200), 40);
 
-        let b = Ball.new(Vector2.new(280, 180), 3);
+        let b = Ball.new(Vector2.new(280, 180));
+
+        let bricks = Array.new(60);
+
+        let lives = 5;
+        let score = 0;
 
         return this;
     }
@@ -14,21 +22,33 @@ class BreakoutGame {
     method void run() {
         var char key;
         var boolean exit;
+
         let exit = false;
 
         do p.draw();
+        do b.draw();
+
         do drawBricks();
 
-        while(~exit) {
-            while(key = 0) {
-                let key = Keyboard.keyPressed();
-           
-                do b.draw();
-                do b.move();
+        while(~exit) {          
+            let key = Keyboard.keyPressed();
+
+            do b.move();
+            do b.HasCollidedWithPlayer(p.getVector(), p.getLength());
+            do drawHud();
+
+            if(b.hasHitABrick()) {
+                let score = score + 10;
+            }
+
+            if(b.hasGoneOutOfBounds()) {
+                let lives = lives - 1;
             }
 
             if(key = 81) { // q key
                 let exit = true;
+                do p.dispose();
+                do b.dispose();
             } 
 
             if(key = 68) { // d key
@@ -39,9 +59,35 @@ class BreakoutGame {
                 do p.moveLeft();
             }    
 
+            if(lives = 0) {
+                let exit = true;
+            }
+
             let key = 0;   
-            do Sys.wait(100);
+            do Sys.wait(50);
         }
+
+        return;
+    }
+
+    method void drawBricks() {
+        do Screen.drawRectangle(0, 0, 511, 80);
+
+        return;
+    }
+
+    method void drawHud() {
+        do Output.moveCursor(21, 0);
+        do Output.printString("Lives: ");
+
+        do Output.moveCursor(21, 7);
+        do Output.printInt(lives);
+
+        do Output.moveCursor(22, 0);
+        do Output.printString("Score: ");
+
+        do Output.moveCursor(22, 7);
+        do Output.printInt(score);
 
         return;
     }
@@ -51,14 +97,6 @@ class BreakoutGame {
         do b.dispose();
         do Memory.deAlloc(this);
 
-        return;
-    }
-
-    method void drawBricks() {
-        var Brick test;
-        let test = Brick.new(Vector2.new(5,5));
-
-        do test.draw(true);
         return;
     }
 }

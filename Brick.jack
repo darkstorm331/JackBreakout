@@ -6,8 +6,8 @@ class Brick {
     constructor Brick new(Vector2 apos) {
         let pos = apos;
 
-        let length = 20;
-        let width = 5;
+        let length = 40;
+        let width = 10;
 
         do draw(true);
         return this;
@@ -18,7 +18,13 @@ class Brick {
         do Screen.drawRectangle(pos.getX(), pos.getY(), pos.getX() + length, pos.getY() + width);
 
         return;
-    }    
+    } 
+
+    method void hasCollidedWithBall(Vector2 bVec, int len) {
+        do draw(false);
+        do dispose();
+        return;
+    }   
 
     method void dispose() {
         do pos.dispose();

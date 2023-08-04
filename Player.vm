@@ -6,9 +6,9 @@ push argument 0
 pop this 0
 push argument 1
 pop this 1
-push constant 60
+push constant 100
 pop this 2
-push constant 5
+push constant 10
 pop this 3
 push pointer 0
 return
@@ -126,6 +126,16 @@ push pointer 0
 call Player.draw 1
 pop temp 0
 push constant 0
+return
+function Player.getVector 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Player.getLength 0
+push argument 0
+pop pointer 0
+push this 2
 return
 function Player.dispose 0
 push argument 0

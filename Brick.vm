@@ -4,9 +4,9 @@ call Memory.alloc 1
 pop pointer 0
 push argument 0
 pop this 0
-push constant 20
+push constant 40
 pop this 1
-push constant 5
+push constant 10
 pop this 2
 push pointer 0
 push constant 0
@@ -34,6 +34,18 @@ call Vector2.getY 1
 push this 2
 add
 call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Brick.hasCollidedWithBall 0
+push argument 0
+pop pointer 0
+push pointer 0
+push constant 0
+call Brick.draw 2
+pop temp 0
+push pointer 0
+call Brick.dispose 1
 pop temp 0
 push constant 0
 return
